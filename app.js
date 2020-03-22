@@ -1,6 +1,7 @@
 const express = require('express');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
+const users = require('./routes/users');
 
 // This will be our application entry. We'll setup our server here.
 const http = require('http');
@@ -10,6 +11,9 @@ const app = express();
 
 // Log requests to the console.
 app.use(logger('dev'));
+
+//User routes for auth
+app.use('/users', users);
 
 // Parse incoming requests data (https://github.com/expressjs/body-parser)
 app.use(bodyParser.json());

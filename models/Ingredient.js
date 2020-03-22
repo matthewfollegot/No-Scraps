@@ -25,10 +25,6 @@ const Ingredient = db.sequelize.define('ingredient', {
     quantity: {
         allowNull: false,
         type: Sequelize.DOUBLE
-    },
-    unit: { //Necessary?
-        allowNull: false,
-        type: Sequelize.STRING
     }
 });
 

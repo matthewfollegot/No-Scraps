@@ -10,6 +10,7 @@ const Step = db.sequelize.define('step', {
     },
     recipe_id: {
         allowNull: false,
+        primaryKey: true,
         type: Sequelize.STRING,
         onDelete: '', //@TODO
         references: {
