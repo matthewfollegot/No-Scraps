@@ -38,3 +38,18 @@ router.post('/login', async (req, res) => {
         res.send({message: "Failed to login", error: err});
     }
 });
+
+//Change password
+router.put('/:email/password', async (req, res) => {
+    try {
+        const hashedPassword = await bcrypt.hash(req.body.password, 10); //hashing inputted password
+        const updatedUser =  await User.update({ password: hashedPassword}, { //update query
+            where: {
+                email: req.params.email
+            }
+        });
+        res.json(updatedUser);
+    } catch(err) {
+        res.send({message: "Failed to update password", error: err});
+    }
+});
