@@ -53,3 +53,5 @@ router.put('/:email/password', async (req, res) => {
         res.send({message: "Failed to update password", error: err});
     }
 });
+
+module.exports = router;
