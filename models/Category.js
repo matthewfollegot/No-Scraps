@@ -1,7 +1,8 @@
 const Sequelize = require('sequelize');
-const db = require('./index');
+const db = require('../config/database.js');
 
-const Category = db.sequelize.define('category', {
+
+const Category = db.define('category', {
     category: {
         allowNull: false,
         primaryKey: true,

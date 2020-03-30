@@ -1,8 +1,8 @@
 const Sequelize = require('sequelize');
 const Recipe = require('./Recipe');
-const db = require('./index');
+const db = require('../config/database.js');
 
-const Step = db.sequelize.define('step', {
+const Step = db.define('step', {
     step_no: {
         allowNull: false,
         primaryKey: true,

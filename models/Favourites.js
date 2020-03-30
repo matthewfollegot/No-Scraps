@@ -1,9 +1,9 @@
 const Sequelize = require('sequelize');
 const Recipe = require('./Recipe');
 const User = require('./User');
-const db = require('./index');
+const db = require('../config/database.js');
 
-const Favourites = db.sequelize.define('favourites', {
+const Favourites = db.define('favourites', {
     recipe_id: {
         allowNull: false,
         primaryKey: true,

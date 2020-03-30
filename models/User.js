@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
-const db = require('./index');
+const db = require('../config/database.js');
 
-const User = db.sequelize.define('user', {
+const User = db.define('user', {
     email: {
         allowNull: false,
         primaryKey: true,

@@ -1,9 +1,9 @@
 const Sequelize = require('sequelize');
-const db = require('./index');
 const Recipe = require('./Recipe');
 const Category = require('./Category');
+const db = require('../config/database.js');
 
-const CategorizedRecipe = db.sequelize.define('categorizedRecipe', {
+const CategorizedRecipe = db.define('categorizedRecipe', {
     recipe_id: {
         allowNull: false,
         primaryKey: true,
