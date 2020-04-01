@@ -2,6 +2,7 @@ const express = require('express');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 const users = require('./routes/users');
+const registertwo = require('./routes/registertwo');
 const recipes = require('./routes/recipes');
 const fs = require('fs');
 const url =  require('url');
@@ -35,7 +36,7 @@ app.use(logger('dev'));
 
 //Routes for login
 app.use('/logintwo',logintwo);
-
+app.use('/registertwo', registertwo);
 //User routes for auth
 app.use('/users', users);
 
