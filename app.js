@@ -33,30 +33,23 @@ app.set('view engine', 'ejs');
 app.use(logger('dev'));
 // app.use(express.static(path.join(__dirname,'public')));
 
+//Routes for login
+app.use('/logintwo',logintwo);
+
 //User routes for auth
 app.use('/users', users);
 
 //Routes for recipes
-app.use('/recipes', recipes)
+app.use('/recipes', recipes);
 
 // Parse incoming requests data (https://github.com/expressjs/body-parser)
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use('/logintwo',logintwo)
-
-
-
-
-
 // Setup a default catch-all route that sends back a welcome message in JSON format.
 app.get('*', (req, res) => res.status(200).send({
     message: 'Hello world :-)',
 }));
-
-app.get('/logintwo', function(req,res){
-    res.send('logintwo')
-})
 
 const port = parseInt(process.env.PORT, 10) || 8000;
 app.set('port', port);
