@@ -4,6 +4,7 @@ const router = express.Router();
 router.get('/', (req, res) => {
     try {
         res.render('logintwo');
+        
     }
     catch(err) {
         res.send({message: "Failed tossssssssssssss retrive recipes based on inputted ingredients", error: err});
