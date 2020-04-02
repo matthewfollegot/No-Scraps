@@ -6,7 +6,8 @@ const Ingredient = db.define('ingredient', {
     ingredient_id: {
         allowNull: false,
         primaryKey: true,
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        autoIncrement: true
     },
     recipe_id: {
         allowNull: false,
@@ -21,10 +22,6 @@ const Ingredient = db.define('ingredient', {
     name: {
         allowNull: false,
         type: Sequelize.STRING
-    },
-    quantity: {
-        allowNull: false,
-        type: Sequelize.DOUBLE
     }
 });
 
