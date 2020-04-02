@@ -7,7 +7,9 @@ const recipes = require('./routes/recipes');
 const fs = require('fs');
 const url =  require('url');
 const logintwo = require('./routes/logintwo');
+const index = require('./routes/index');
 
+const recipeList = require('./routes/recipeList');
 // Database
 const db = require('./config/database.js')
 
@@ -38,7 +40,9 @@ app.use(logger('dev'));
 app.use('/logintwo',logintwo);
 app.use('/registertwo', registertwo);
 //User routes for auth
+app.use('/index', index);
 app.use('/users', users);
+app.use('/recipeList', recipeList);
 
 //Routes for recipes
 app.use('/recipes', recipes);
@@ -49,7 +53,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // Setup a default catch-all route that sends back a welcome message in JSON format.
 app.get('*', (req, res) => res.status(200).send({
-    message: 'Hello world :-)',
+    // message: 'Hello world :-)',
 }));
 
 const port = parseInt(process.env.PORT, 10) || 8000;

@@ -5,6 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "nodemon app.js",
+    "build": "babel src -d lib",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -26,12 +27,18 @@
     "express-router": "0.0.1",
     "morgan": "^1.9.1",
     "mysql2": "^2.1.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
     "sequelize": "^5.21.5",
     "sqlite3": "^4.1.1"
   },
   "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.0",
+    "@babel/preset-react": "^7.9.4",
+    "node-pre-gyp": "0.12.0",
     "nodemon": "^2.0.2",
-    "sequelize-cli": "^5.5.1",
-    "node-pre-gyp": "0.12.0"
+    "sequelize-cli": "^5.5.1"
   }
 }
