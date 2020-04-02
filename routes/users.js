@@ -1,6 +1,8 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
 const User = require('./../models/User');
+const Favourites = require('./../models/Favourites');
+const Recipe = require('./../models/Recipe');
 const router = express.Router();
 
 //Register
@@ -53,5 +55,30 @@ router.put('/:email/password', async (req, res) => {
         res.send({message: "Failed to update password", error: err});
     }
 });
+
+//Get favouites by user
+router.get('/:email/favourites', async (req, res) => {
+    try{
+        const recipeIds = await Favourites.findAll({
+            attributes: ['recipe_id'],
+            where: {
+                email: req.params.email
+            }
+        }).map(el => el.get('recipe_id'));
+        if(recipeIds == null || recipeIds.length == 0){
+            return res.send({message: "No favourites for the email " + req.params.email});
+        }
+        const favouriteRecipes = await Recipe.findAll({
+            where: {
+                recipe_id: {
+                    [Op.in]: recipeIds
+                }
+            }
+        });
+        res.json(favouriteRecipes);
+    } catch(err) {
+        res.send({message: "Failed to retrieve favourites", error: err});
+    }
+})
 
 module.exports = router;
