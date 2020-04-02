@@ -42,7 +42,7 @@ app.get('*', (req, res) => res.status(200).send({
     message: 'Hello world :-)',
 }));
 
-const port = parseInt(process.env.PORT, 10) || 8000;
+const port = parseInt(process.env.PORT, 10) || 5000;
 console.log("Starting up on port " + port)
 app.set('port', port);
 const server = http.createServer(app);
