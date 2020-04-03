@@ -6,7 +6,7 @@ router.get('/', (req, res) => {
         res.render('register');
     }
     catch(err) {
-        res.send({message: "Failed tossssssssssssss retrive recipes based on inputted ingredients", error: err});
+        res.send({message: "Failure", error: err});
     }
 });
 
