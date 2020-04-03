@@ -1,8 +1,94 @@
+<html>
 <section id="recipes" class="container">
-    <h1>Recipes: (click to view more details of any recipe)</h1>
+   <head>
+        <style>
+        * {
+            font-family: 'Comic Neue'; 
+        }
+        #header {
+            background: #F0929D;
+            border-bottom: 0.05em solid black;
+        }
+        #headerText {
+            font-weight: bolder;
+        }
+        #profile {
+            text-align: right;
+            vertical-align: middle;
+            margin: auto;
+        }
+        #filtering {
+            background: #82E2E7;
+        } 
+        #results {
+            background: #F7E9D0
+        }
+        #page {
+            height: 100vh;
+        }
+        #ingredientsText {
+            font-weight: bold;
+        }
+        #inputtedIngredients {
+            margin-top: 1.5em;
+            margin-bottom: 2em;
+        }
+        #recipeFiltering {
+            font-weight: bolder;
+            margin-top: 2em;
+        }
+        #example {
+            font-size: 0.9em;
+            text-align: center;
+        }
+        #inputtedRestrictions {
+            margin-bottom: 2em;
+        }
+        #restrictionsText {
+            font-weight: bolder;
+        }
+        #inputtedCategory {
+            margin-bottom: 2em;
+        }
+        #categoryText {
+            font-weight: bolder;
+        }
+        #recipeDifficultyText {
+            font-weight: bolder;
+        }
+        #findRecipes {
+            margin-top: 3em;
+            text-align: center;
+        }
+        .pink {
+            background: #F0929D;
+        }
+        .pink:hover {
+            color: white;
+        }
+    </style>
+    </head>
+    <body>
+     <div class="container-fluid" id ="page">
+        <div class="row" id="header">
+            <div class="col-10">
+                <h2 id="headerText">No-Scraps</h2>
+            </div>
+            <div class="col-2" id="profile">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Profile</button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="/addRecipe">Add Recipe</a>
+                        <a class="dropdown-item" href="/user/{{email}}/favourites">Favourites</a>
+                        <a class="dropdown-item" href="/login">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <h1 id ="header">Recipes: (click to view more details of any recipe)</h1>
 
     {{#each recipes}}
-        <div class="recipe">
+        <div class="recipe" id = "results" background = "#82E2E7">
         <a href="/recipes/{{dataValues.recipe_id}}"><h3>{{dataValues.title}}</h3></a>
         <p>Rating: {{dataValues.rating}}</p>
         <p>Ingredients: {{dataValues.ingredients}}</p>
@@ -11,4 +97,7 @@
     {{else}}
     <p>no recipes matched</p>
     {{/each}}
+    </body>
 </section>
+
+</html>
