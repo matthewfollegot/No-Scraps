@@ -6,7 +6,7 @@ router.get('/', (req, res) => {
         res.render('register');
     }
     catch(err) {
-        res.send({message: "Failure", error: err});
+        res.send({message: "Failure to retrive register page", error: err});
     }
 });
 

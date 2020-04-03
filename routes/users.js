@@ -5,6 +5,16 @@ const Favourites = require('./../models/Favourites');
 const Recipe = require('./../models/Recipe');
 const router = express.Router();
 
+//Get all users (FOR TESTING PURPOSES)
+router.get('/', async (req, res) => {
+    try{
+        const users = await User.findAll();
+        res.send(users);
+    } catch(err) {
+        res.send({message: "Failed to retrieve users", error: err});
+    }
+});
+
 //Register
 router.post('/register', async (req, res) => {
     try {
