@@ -37,6 +37,13 @@ app.set('view engine', 'ejs');
 app.use(logger('dev'));
 // app.use(express.static(path.join(__dirname,'public')));
 
+app.get('/', (req, res) => {
+    try{
+        res.render('homepage');
+    } catch(err) {
+        res.send({message: "Error rending homepage", error: err});
+    }
+})
 //Routes for login
 app.use('/login',login);
 app.use('/register', register);

@@ -7,7 +7,7 @@ router.get('/', (req, res) => {
     }
     
     try {
-        res.render('login');
+        res.render('homepage');
         
     }
     catch(err) {
