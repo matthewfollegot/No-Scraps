@@ -26,39 +26,43 @@ router.post('/register', async (req, res) => {
                 User.create({
                     email: req.body.email,
                     password: hashedPassword
-            })
+            });
+            res.json({message: "Successfully added new user", status: "ok"})
         }})
     } catch(err) {
-        res.send({message: "Failed to add new instance of user", error: err});
+        res.send({message: "Failed to add new instance of user", error: err, status: "poor"});
     }
 });
 
 //Login
 router.post('/login', async (req, res) => {
-    const user = await User.findAll({ //retrive hashed password of user with inputted email
+    const user = User.findOne({ //retrive hashed password of user with inputted email
         attributes: ['password'],
         where: {
             email: req.body.email
         }
-    });
-    dbPassword = user[0]['password'];
-
-    if(dbPassword == null || dbPassword.length == 0){ //if no result
-        return res.send({message: "No existing user with the email " + req.body.email});
-    }
-    bcrypt.compare(req.body.password, dbPassword, function(err, result) {
-        if (err){
-            res.send({message: "Failed to login", error: err});
-            return;
+    }).then(resp => {
+        if(!resp) {
+            return res.send({message: "No existing user with the email " + req.body.email, status:"no-user"});
+        } else{
+            let dbPassword = resp.dataValues.password;
+            bcrypt.compare(req.body.password, dbPassword, function(err, result) {
+                if (err){
+                    res.send({message: "Failed to login", error: err});
+                    return;
+                }
+                if (result) {
+                    res.send({message: "Successful login", status: "valid-password"});
+                } else {
+                    // response is OutgoingMessage object that server response http request
+                    res.send({success: false, status: "bad-password"});
+                    return;
+                }
+            });
         }
-        if (result) {
-            window.location.replace('/recipe_list');
-        } else {
-            // response is OutgoingMessage object that server response http request
-            res.send({success: false, message: 'passwords do not match'});
-            return;
-        }
-        });
+    }).catch(err => {
+        console.log(err);
+    })
 });
 
 //Change password

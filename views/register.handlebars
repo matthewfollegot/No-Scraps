@@ -59,6 +59,10 @@
         #loginHere {
             color: #F0929D;
         }
+        #error {
+            color: red;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -84,6 +88,7 @@
                         <label for="password" id="passwordLabel">Password</label>
                         <input type="password" class="form-control" id="password" placeholder="Password" name="password">
                     </div>
+                    <p id="error"></p>
                     <div id="register">
                         <input type="button" class="btn skin" onclick="register()" value="Register"/>
                     </div>
@@ -107,7 +112,11 @@
             })
                 .then(resp => {
                     console.log(resp);
-                    window.location.replace('/login');
+                    if(resp.data.status === "ok"){
+                        window.location.replace('/login');
+                    } else{
+                        document.getElementById('error').innerHTML = "A user already exists with the inputted email."
+                    }
                 })
                 .catch(err => {
                     console.log(err);

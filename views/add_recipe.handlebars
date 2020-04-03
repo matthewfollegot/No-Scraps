@@ -29,7 +29,7 @@
             margin-bottom: 1em;
             float: none; 
         }
-        #register {
+        #addOrBack {
             text-align: center;
             margin-top: 1em;
             margin-bottom: 1em;
@@ -54,6 +54,16 @@
         }
         #loginHere {
             color: #F0929D;
+        }
+        #errors {
+            color: red;
+            text-align: center;
+        }
+        .blue {
+            background: #34BCE1;
+        }
+        .blue:hover {
+            color: white;
         }
     </style>
 </head>
@@ -90,7 +100,9 @@
                         <input class="form-control" id="categories" placeholder="Enter categories here" name="categories">
                         <p id="example">Ex. Vegan, Vegtarian, Halal</p>
                     </div>
-                    <div id="register">
+                    <p id="errors"></p>
+                    <div id="addOrBack">
+                        <input type="button" class="btn blue" onclick="window.location.replace('/recipe_list')" value="Back"/>
                         <input type="button" class="btn skin" onclick="addRecipe()" value="Add Recipe"/>
                     </div>
                 </form>
@@ -105,20 +117,25 @@
             let ingredients = inputs['ingredients'].value.split(',');
             let steps = inputs['steps'].value.split(',');
             let categories = inputs['categories'].value.split(',');
-            
-            axios.post('/recipes/new',{
+
+            if(!title || !description || ! ingredients || !steps || !categories){
+                document.getElementById('errors').innerHTML = "One of more inputs is missing. Please fill in all inputs."
+            } else{
+                axios.post('/recipes/new',{
                 title: title,
                 description: description,
                 ingredients: ingredients,
                 steps: steps,
                 categories: categories
-            })
-                .then(resp => {
-                    console.log(resp);
                 })
-                .catch(err => {
-                    console.log(err);
-                })
+                    .then(resp => {
+                        console.log(resp);
+                        window.location.replace('/recipe_list');
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+            }
         }
     </script>
 </body>
