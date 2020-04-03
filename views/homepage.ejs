@@ -62,6 +62,10 @@
         #registerNew {
             color: #F0929D;
         }
+        #errors {
+            text-align: center;
+            color: red;
+        }
     </style>
 </head>
 <body>
@@ -92,6 +96,7 @@
                         <label for="password" id="passwordLabel">Password</label>
                         <input type="password" class="form-control" id="password" placeholder="Password" name="password">
                     </div>
+                    <p id="errors"></p>
                     <div id="login">
                         <input type="button" class="btn blue" onclick="getRecipes()" value="Continue as Guest"/>
                         <input type="button" class="btn skin" onclick="login()" value="Login"/>
@@ -119,8 +124,13 @@
             })
                 .then(resp => {
                     console.log(resp);
-                    //window.location.replace('/recipe_list'); //NEED TO SOMEHOW PASS THE EMAIL
-                    // why do we need to pass the email if we passed it in above??
+                    if(resp.data.status === "no-user"){
+                        document.getElementById('errors').innerHTML = "No user matched with inputted email.";
+                    } else if(resp.data.status === "bad-password"){
+                        document.getElementById('errors').innerHTML = "Invalid password."
+                    } else if(resp.data.status === "valid-password"){
+                        window.location.replace('/recipe_list?email=' + email);
+                    }
                 })
                 .catch(err => {
                     console.log(err);

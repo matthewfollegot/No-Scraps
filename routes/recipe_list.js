@@ -3,7 +3,8 @@ const router = express.Router();
 
 router.get('/', (req, res) => {
     try {
-       res.render('recipe_list');
+        console.log(req.query.email);
+       res.render('recipe_list', {email: req.query.email});
     }
     catch(err) {
         res.send({message: "Failed to retrive recipe page", error: err});
