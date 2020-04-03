@@ -26,7 +26,9 @@ SET default_table_access_method = heap;
 
 CREATE TABLE public.favourites (
     recipe_id integer NOT NULL,
-    email character varying(50) NOT NULL
+    email character varying(50) NOT NULL,
+    "createdAt" date,
+    "updatedAt" date
 );
 
 
@@ -118,7 +120,9 @@ ALTER SEQUENCE public.recipes_recipe_id_seq OWNED BY public.recipes.recipe_id;
 
 CREATE TABLE public.users (
     email character varying(50) NOT NULL,
-    password character varying(50) NOT NULL
+    password character varying(100) NOT NULL,
+    "createdAt" date,
+    "updatedAt" date
 );
 
 
@@ -142,7 +146,7 @@ ALTER TABLE ONLY public.recipes ALTER COLUMN recipe_id SET DEFAULT nextval('publ
 -- Data for Name: favourites; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.favourites (recipe_id, email) FROM stdin;
+COPY public.favourites (recipe_id, email, "createdAt", "updatedAt") FROM stdin;
 \.
 
 
@@ -667,7 +671,8 @@ COPY public.recipes (recipe_id, title, rating, fat, calories, protein, sodium, d
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.users (email, password) FROM stdin;
+COPY public.users (email, password, "createdAt", "updatedAt") FROM stdin;
+matthewfollegot@gmail.com	$2b$10$MnDDm7eFIkWoibQEijmDMeUKG4yHxY2eLu6x8RP3vLgyt4PzOIznm	2020-04-03	2020-04-03
 \.
 
 

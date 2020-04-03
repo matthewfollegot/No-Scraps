@@ -33,6 +33,7 @@ const http = require('http');
 // Set up the express app
 const app = express();
 app.set('view engine', 'ejs');
+app.use(bodyParser());
 // Log requests to the console.
 app.use(logger('dev'));
 // app.use(express.static(path.join(__dirname,'public')));

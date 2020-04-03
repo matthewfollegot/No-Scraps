@@ -18,12 +18,16 @@ router.get('/', async (req, res) => {
 //Register
 router.post('/register', async (req, res) => {
     try {
-        const hashedPassword = await bcrypt.hash(req.body.password, 10); //hashing inputted password
-        const newUser = await User.create({ //creating new instance (row) and adding to db
-            email: req.body.email,
-            password: hashedPassword
-        });
-        res.json(newUser);
+        // hashing inputted password
+        await bcrypt.hash(req.body.password, 10, function(err, hashedPassword) {
+            if (err) {
+                res.send({message: "Failed to add new instance of user", error: err});
+            } else {
+                User.create({
+                    email: req.body.email,
+                    password: hashedPassword
+            })
+        }})
     } catch(err) {
         res.send({message: "Failed to add new instance of user", error: err});
     }

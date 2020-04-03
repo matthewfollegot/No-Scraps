@@ -101,7 +101,10 @@
             let inputs = document.getElementById("login-info").elements;
             let email = inputs["email"].value;
             let password = inputs["password"].value;
-            axios.post('/users/register')
+            axios.post('/users/register', {
+              email: email,
+              password: password
+            })
                 .then(resp => {
                     console.log(resp);
                     window.location.replace('/login');
