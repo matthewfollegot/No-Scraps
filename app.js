@@ -8,6 +8,7 @@ const fs = require('fs');
 const url =  require('url');
 const login = require('./routes/login');
 const index = require('./routes/index');
+const favourites = require('./routes/favourites');
 
 const recipe_list = require('./routes/recipe_list');
 // Database
@@ -46,6 +47,9 @@ app.use('/recipe_list', recipe_list);
 
 //Routes for recipes
 app.use('/recipes', recipes);
+
+//Routes for favourites
+app.use('/favourites', favourites);
 
 // Parse incoming requests data (https://github.com/expressjs/body-parser)
 app.use(bodyParser.json());
