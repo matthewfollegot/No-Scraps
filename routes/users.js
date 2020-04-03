@@ -89,6 +89,35 @@ router.get('/:email/favourites', async (req, res) => {
     } catch(err) {
         res.send({message: "Failed to retrieve favourites", error: err});
     }
-})
+});
+
+//Add favourite 
+router.post('/:email/favourites', async (req, res) => {
+    try{
+        const newFavourite = await Favourite.create({
+            email: req.params.email,
+            recipe_id: req.body.recipe_id
+        });
+        res.json(newFavourite);
+    } catch(err) {
+        res.send({message: "Failed to add new favourite" , error: err});
+    }
+});
+
+//Delete favourite
+router.delete('/:email/favourite', async (req, res) => {
+    try{
+        const deletedFavourite = await Favourites.destroy({
+            where: {
+                email: req.params.email,
+                recipe_id: req.body.recipe_id
+            }
+        });
+        res.json(deletedFavourite);
+    }
+    catch(err) {
+        res.send({message: "Failed to delete favourite instance", error: err});
+    }
+});
 
 module.exports = router;
