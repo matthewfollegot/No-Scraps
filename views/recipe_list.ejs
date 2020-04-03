@@ -1,77 +1,170 @@
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
-
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <h1>Recipe List</h1>
-
-    <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-  </head>
-  <div class = "row"> 
-    <h1> found email : </h1> </div>
-  </div>
-  <body>
-    
-    <div id="wrapper"></div>
-    <div id="wrapper2"></div>
-
-       
-    
-    <script>  
-      let codeBlock = '<div class="card" style="width: 40rem;">' +
-                        ' <div class="card-body">' +
-                        '<h5 class="card-title">Recipe title</h5>' +
-                        '<h6 class="card-subtitle mb-2 text-muted"> subtitle</h6>' +
-                        ' <p class="card-text">Some quick example text to build on the card title and make up the bulk of the cards content.</p>' +
-                        '<a href="#" class="card-link"> View Recipe</a>' +
-                        '</div>'+
-                        '</div>';
-                        let test = document.getElementById("wrapper").innerHTML = codeBlock;
-                        function looperRecipe(holder){
-                            console.log("reached")
-                           for(let i = 0 ; i < 3 ; i ++){
-                            console.log("reached for loop")
-                            test;
-                            // document.getElementById("wrapper").innerHTML = holder
-                                            }
-                                            } 
-          //  console.log(codeBlock)                               
-        let loopFun = looperRecipe(codeBlock);
-
-        let x = "",i;
-        for(let j = 0; j <4 ; j++){
-          x += codeBlock + "<br>";
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Recipes</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href='https://fonts.googleapis.com/css?family=Comic Neue' rel='stylesheet'>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <style>
+        * {
+            font-family: 'Comic Neue'; 
         }
-document.getElementById("wrapper").innerHTML = x;
-// document.getElementById("wrapper2").innerHTML = codeBlock;
-console.log(looperRecipe(codeBlock));
-</script>
-   
-   
-    
-    
+        #header {
+            background: #F0929D;
+            border-bottom: 0.05em solid black;
+        }
+        #headerText {
+            font-weight: bolder;
+        }
+        #profile {
+            text-align: right;
+            vertical-align: middle;
+            margin: auto;
+        }
+        #filtering {
+            background: #82E2E7;
+        } 
+        #results {
+            background: #F7E9D0
+        }
+        #page {
+            height: 100vh;
+        }
+        #ingredientsText {
+            font-weight: bold;
+        }
+        #inputtedIngredients {
+            margin-top: 1.5em;
+            margin-bottom: 2em;
+        }
+        #recipeFiltering {
+            font-weight: bolder;
+            margin-top: 2em;
+        }
+        #example {
+            font-size: 0.9em;
+            text-align: center;
+        }
+        #inputtedRestrictions {
+            margin-bottom: 2em;
+        }
+        #restrictionsText {
+            font-weight: bolder;
+        }
+        #inputtedCategory {
+            margin-bottom: 2em;
+        }
+        #categoryText {
+            font-weight: bolder;
+        }
+        #recipeDifficultyText {
+            font-weight: bolder;
+        }
+        #findRecipes {
+            margin-top: 3em;
+            text-align: center;
+        }
+        .pink {
+            background: #F0929D;
+        }
+        .pink:hover {
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row" id="header">
+            <div class="col-10">
+                <h2 id="headerText">No-Scraps</h2>
+            </div>
+            <div class="col-2" id="profile">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Profile</button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="/user/{EMAILHERE}/favourites">Favourites</a>
+                        <a class="dropdown-item" href="/login">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" id="page">
+            <div class="col-3" id="filtering">
+                <h2 id="recipeFiltering">Apply Recipe Filtering</h2>
+                <div class="row" id="inputtedIngredients">
+                    <div class="col-4">
+                        <p id="ingredientsText">Ingredients</p>
+                    </div>
+                    <div class="col-8">
+                        <input type="text" class="form-control" id="ingredients" placeholder="Enter ingredients">
+                        <p id="example">Ex. apples,bananas,oranges</p>
+                    </div>
+                </div>
+                <div class="row" id="inputtedRestrictions">
+                    <div class="col-4">
+                        <p id="restrictionsText">Allergies / Restrictions</p>
+                    </div>
+                    <div class="col-8">
+                        <input type="text" class="form-control" id="restrictions" placeholder="Enter allergies/restrictions">
+                        <p id="example">Ex. peanuts,milk,shrimp</p>
+                    </div>
+                </div>
+                <div class="row" id="inputtedCategory">
+                    <div class="col-4">
+                        <p id="categoryText">Category</p>
+                    </div>
+                    <div class="col-8">
+                        <input type="text" class="form-control" id="categories" placeholder="Enter category">
+                        <p id="example">Ex. Halal,Vegan</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <p id="recipeDifficultyText">Difficulty</p>
+                    </div>
+                    <div class="col-8">
+                        <label class="radio-inline"><input type="radio" name="difficulty" id="beginner">Beginner</label>
+                        <label class="radio-inline"><input type="radio" name="difficulty" id="intermediate">Intermediate</label>
+                        <label class="radio-inline"><input type="radio" name="difficulty" id="advanced">Advanced</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col" id="findRecipes">
+                        <button type="button" class="btn pink btn-lg" onclick="getRecipes()">Find Recipes!</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-9" id="results">
 
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.min.js"></script>
-  
-
+            </div>
+        </div>
+    </div>
+    <script>
+        function getRecipes() {
+            let ingredients = document.getElementById('ingredients').value;
+            let restrictions = document.getElementById('restrictions').value;
+            let categories = document.getElementById('categories').value;
+            let elements = document.getElementsByName('difficulty');
+            let difficulty = document.getElementsByName('difficulty');
+            for(let i = 0; i < difficulty.length; i++){ //NOT WORKING FOR SOME REASON
+                if(difficulty[i].checked){
+                    console.log(difficulty[i].value);
+                }
+            }
+            axios.get('/recipes?ingredients=' + ingredients + '&restrictions=' + restrictions + '&categories=' + categories + '&difficulty=' + difficulty)
+                .then(resp => {
+                    console.log(resp);
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        }
+    </script>
 </body>
-  
 </html>
-
-
