@@ -146,7 +146,7 @@ router.get('/', async (req, res) => {
                 finalRecipes.push(recipesWithoutDifficulty[i]);
             }
         }
-        res.render('recipes', {
+        res.render('recipe_list', {
             recipes: finalRecipes
         });
         console.log(finalRecipes.length);

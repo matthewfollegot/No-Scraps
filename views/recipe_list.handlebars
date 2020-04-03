@@ -130,9 +130,8 @@
                         <p id="recipeDifficultyText">Difficulty</p>
                     </div>
                     <div class="col-8">
-                        <label class="radio-inline"><input type="radio" name="difficulty" id="beginner">Beginner</label>
-                        <label class="radio-inline"><input type="radio" name="difficulty" id="intermediate">Intermediate</label>
-                        <label class="radio-inline"><input type="radio" name="difficulty" id="advanced">Advanced</label>
+                        <input type="text" class="form-control" id="difficulty" placeholder="Enter difficulty">
+                        <p id="example">Either beginner, intermediate, advanced</p>
                     </div>
                 </div>
                 <div class="row">
@@ -142,7 +141,20 @@
                 </div>
             </div>
             <div class="col-9" id="results">
+                <section id="recipes" class="container">
+                    <h1>Recipes: (click to view more details of any recipe)</h1>
 
+                    {{#each recipes}}
+                    <div class="recipe">
+                        <a href="/recipes/{{dataValues.recipe_id}}"><h3>{{dataValues.title}}</h3></a>
+                        <p>Rating: {{dataValues.rating}}</p>
+                        <p>Ingredients: {{dataValues.ingredients}}</p>
+                        <p>Categories: {{dataValues.categories}}</p>
+                    </div>
+                    {{else}}
+                        <p>no recipes matched</p>
+                    {{/each}}
+                </section>
             </div>
         </div>
     </div>
@@ -151,20 +163,8 @@
             let ingredients = document.getElementById('ingredients').value;
             let restrictions = document.getElementById('restrictions').value;
             let categories = document.getElementById('categories').value;
-            let elements = document.getElementsByName('difficulty');
-            let difficulty = document.getElementsByName('difficulty');
-            for(let i = 0; i < difficulty.length; i++){ //NOT WORKING FOR SOME REASON
-                if(difficulty[i].checked){
-                    console.log(difficulty[i].value);
-                }
-            }
-            axios.get('/recipes?ingredients=' + ingredients + '&restrictions=' + restrictions + '&categories=' + categories + '&difficulty=' + difficulty)
-                .then(resp => {
-                    console.log(resp);
-                })
-                .catch(err => {
-                    console.log(err);
-                });
+            let difficulty = document.getElementById('difficulty').value.toLowerCase();
+            window.location.replace('/recipes?ingredients=' + ingredients + '&restrictions=' + restrictions + '&categories=' + categories + '&difficulty=' + difficulty);
         }
     </script>
 </body>
