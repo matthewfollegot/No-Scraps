@@ -2,14 +2,14 @@ const express = require('express');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 const users = require('./routes/users');
-const registertwo = require('./routes/registertwo');
+const register = require('./routes/register');
 const recipes = require('./routes/recipes');
 const fs = require('fs');
 const url =  require('url');
-const logintwo = require('./routes/logintwo');
+const login = require('./routes/login');
 const index = require('./routes/index');
 
-const recipeList = require('./routes/recipeList');
+const recipe_list = require('./routes/recipe_list');
 // Database
 const db = require('./config/database.js')
 
@@ -37,12 +37,12 @@ app.use(logger('dev'));
 // app.use(express.static(path.join(__dirname,'public')));
 
 //Routes for login
-app.use('/logintwo',logintwo);
-app.use('/registertwo', registertwo);
+app.use('/login',login);
+app.use('/register', register);
 //User routes for auth
 app.use('/index', index);
 app.use('/users', users);
-app.use('/recipeList', recipeList);
+app.use('/recipe_list', recipe_list);
 
 //Routes for recipes
 app.use('/recipes', recipes);
