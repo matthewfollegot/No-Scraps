@@ -97,11 +97,11 @@
         </div>
     </div>
     <script>
-        function register() {
+        async function register() {
             let inputs = document.getElementById("login-info").elements;
             let email = inputs["email"].value;
             let password = inputs["password"].value;
-            axios.post('/users/register', {
+            await axios.post('/users/register', {
               email: email,
               password: password
             })
