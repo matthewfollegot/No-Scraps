@@ -1,0 +1,33 @@
+<div id="root"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react-dom.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.21.1/babel.min.js"></script>
+<script src = "https://cdnjs.cloudflare.com/ajax/libs/material-components-web/5.1.0/material-components-web.js"></script>
+<script src ="https://cdnjs.cloudflare.com/ajax/libs/material-components-web/5.1.0/material-components-web.js.map"></script>
+<script srch = "https://cdnjs.cloudflare.com/ajax/libs/material-components-web/5.1.0/material-components-web.min.js"></script>
+<script type="text/babel">
+// import Button from '@material-ui/core/Button';
+class Greeting extends React.Component {
+ 
+    render() {
+      let test = <button> test</button> ;
+        return (
+    //       <Button variant="contained" color="primary">
+    //   Hello World
+    // </Button>
+        <p>
+          
+          Hello world
+          <div> {test} </div> 
+          </p>
+        
+          
+         
+        );
+    }
+}
+ReactDOM.render(
+    <Greeting />,
+    document.getElementById('root')
+);
+</script>
