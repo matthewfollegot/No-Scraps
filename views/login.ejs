@@ -1,62 +1,108 @@
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
-<!doctype html>
-<html lang = "en">
-  <head>
-
-    <h1> No-Scraps Log-in</h1>
-
-  </head>
-  <body>
-    <form>
-      <div class="form-group">
-        <label for="email">Email address</label>
-        <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
-        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-      </div>
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" class="form-control" id="password">
-      </div>
-      <div class="form-group form-check">
-        
-        
-      </div>
-      
-      
-      <button  type="submit" class="btn btn-primary">
-        <a href="recipe_list">  Log-in</a>
-        
-        
-       </button>
-
-  
-      <button type = "submit" onclick="sendCreate(1)" class = "btn btn-secondary"> 
-      
-        <a href="register">register   </a> 
-           
-      
-     </button>
-      
-    
-    </form>
-    <script>
-    
-    function sendCreate(a){
-      if(a===1){
-          console.log("reached create" + a)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>No-Scraps</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href='https://fonts.googleapis.com/css?family=Comic Neue' rel='stylesheet'>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <style>
+        * {
+           background: #F7E9D0;
+           font-family: 'Comic Neue'; 
         }
-
-        
-    }
-        
-    
-    </script>
-    
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-    
-  </body>
+        #welcomeHeader {
+            text-align: center;
+            margin: 1em;
+        }
+        #welcome {
+            font-weight: bold;
+        }
+        #loginHeader {
+            text-align: center;
+        }
+        #loginText {
+            text-align: center;
+        }
+        #emailLabel {
+            font-weight: bold;
+        }
+        #passwordLabel {
+            font-weight: bold;
+        }
+        #credentials {
+            margin: auto;
+            float: none; 
+        }
+        #login {
+            text-align: center;
+            margin-top: 1em;
+            margin-bottom: 1em;
+        }
+        .skin {
+            background: #F0929D;
+        }
+        .skin:hover {
+            color: white;
+        }
+        .blue {
+            background: #34BCE1;
+        }
+        .blue:hover {
+            color: white;
+        }
+        #register {
+            text-align: center;
+        }
+        #registerNew {
+            color: #F0929D;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row" id="welcomeHeader">
+            <div class="col">
+                <h1 id="welcome">Welcome to No-Scraps!</h1>
+            </div>
+        </div>
+        <div class="row" id=loginHeader>
+            <div class="col">
+                <h2 id="welcome">Login</h2>
+            </div>
+        </div>
+        <div class="row" id=loginText>
+            <div class="col">
+                <h6>What are you waiting for? Amazing recipes await!</h6>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <form>
+                    <div class="form-group col-4" id="credentials">
+                        <label for="email" id="emailLabel">Email</label>
+                        <input type="email" class="form-control" id="email" aria-describedby="email" placeholder="Enter email">
+                    </div>
+                    <div class="form-group col-4" id="credentials">
+                        <label for="password" id="passwordLabel">Password</label>
+                        <input type="password" class="form-control" id="password" placeholder="Password">
+                    </div>
+                    <div id="login">
+                        <button class="btn blue">Continue as Guest</button>
+                        <button class="btn skin">Login</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col" id="register">
+                <p>Don't have an account? <a id="registerNew" href="">Register here!</a></p>
+            </div>
+        </div>
+    </div>
+</body>
 </html>
-
