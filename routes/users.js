@@ -56,7 +56,7 @@ router.put('/:email/password', async (req, res) => {
     }
 });
 
-//Get favouites by user
+//Get user favourite recipes
 router.get('/:email/favourites', async (req, res) => {
     try{
         const recipeIds = await Favourites.findAll({

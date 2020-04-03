@@ -6,18 +6,18 @@ const Op = Sequelize.Op;
 const router = express.Router();
 
 //Get recipes by inputted ingredients
-//FORMAT: /recipes?ingredients=a,b,c&restriction=d,e,f,&categories=g&recipeDifficulty=h
+//FORMAT: /recipes?ingredients=a,b,c&restrictions=d,e,f,&categories=g&difficulty=h
 /*
 IDEA: 
 For ingredients, find results that do contain items.
 For restrictions, find results that don't contain that items.
 For categories, return items that fit the categories. //ENSURE FIRST LETTER OF EACH WORD IS CAPITALIZED
-For recipeDifficulty, <=5 steps -> beginner, steps <= 10 -> intermediate, >10 steps -> advanced
+For difficulty, <=5 steps -> beginner, steps <= 10 -> intermediate, >10 steps -> advanced
 */
 
 router.get('/', async (req, res) => {
     try {
-        let recipeIds = []; //will hold all the recipe_ids of the recipes that fulfil the queries
+        let recipeIds = []; //will hold all the recipe_ids of the recipes that fulfil the queries 
 
         //Handle inputted ingredients and restrictions
         if(!req.query.ingredients && !req.query.restrictions){ //neither ingredients or restriction
@@ -25,43 +25,76 @@ router.get('/', async (req, res) => {
             recipeIds = recipes;
         } else if(!req.query.ingredients && req.query.restrictions){ //no ingredients but restrictions inputted
             const restrictions = req.query.restrictions.split(',');
-            const recipes = await Recipe.findAll({
-                where: {
-                    [Op.not]: {
-                        ingredients: {
-                            [Op.contains]: restrictions //has to be exact match
+            const recipes = await Recipe.findAll();
+            let restrictionFilteredRecipes = [];
+            for(var i in recipes){
+                let count = recipes[i].ingredients.length * restrictions.length;
+                for(var j in restrictions){
+                    for(var k in recipes[i].ingredients){
+                        if(!recipes[i].ingredients[k].includes(restrictions[j])){
+                            count--;
                         }
                     }
                 }
-            }).map(el => el.get('recipe_id'));
-            recipeIds = recipes;
+                if(count == 0 && restrictionFilteredRecipes.indexOf(recipes[i].recipe_id) == -1){
+                    restrictionFilteredRecipes.push(recipes[i].recipe_id);
+                }
+            }
+            recipeIds = restrictionFilteredRecipes;
         } else if(req.query.ingredients && !req.query.restrictions){ //inputted ingredients but no restrictions
             const ingredients = req.query.ingredients.split(',');
-            const recipes = await Recipe.findAll({
-                where: {
-                    ingredients: {
-                        [Op.contains]: ingredients //has to be exact match
+            const recipes = await Recipe.findAll();
+            let ingredientFilteredRecipes = [];
+            for(var i in recipes){
+                for(var j in recipes[i].ingredients){
+                    for(var k in ingredients){ 
+                        if(recipes[i].ingredients[j].includes(ingredients[k])){
+                            if(ingredientFilteredRecipes.indexOf(recipes[i].recipe_id) == -1){
+                                ingredientFilteredRecipes.push(recipes[i].recipe_id);
+                            }
+                        }
                     }
                 }
-            }).map(el => el.get('recipe_id'));
-            recipeIds = recipes;
+            }
+            recipeIds = ingredientFilteredRecipes;
         }
         else{ //both are defined
             const ingredients = req.query.ingredients.split(',');
             const restrictions = req.query.restrictions.split(',');
-            const recipes = await Recipe.findAll({
-                where: {
-                    ingredients: {
-                        [Op.contains]: ingredients
-                    },
-                    [Op.not]:{
-                        ingredients: {
-                            [Op.contains]: restrictions
+            const recipes = await Recipe.findAll();
+            let restrictionFilteredRecipes = [];
+            for(var i in recipes){
+                let count = recipes[i].ingredients.length * restrictions.length;
+                for(var j in restrictions){
+                    for(var k in recipes[i].ingredients){
+                        if(!recipes[i].ingredients[k].includes(restrictions[j])){
+                            count--;
                         }
                     }
                 }
-            }).map(el => el.get('recipe_id'));
-            recipeIds = recipes;
+                if(count == 0 && restrictionFilteredRecipes.indexOf(recipes[i].recipe_id) == -1){
+                    restrictionFilteredRecipes.push(recipes[i].recipe_id);
+                }
+            }
+            let ingredientFilteredRecipes = [];
+            for(var i in recipes){
+                for(var j in recipes[i].ingredients){
+                    for(var k in ingredients){ 
+                        if(recipes[i].ingredients[j].includes(ingredients[k])){
+                            if(ingredientFilteredRecipes.indexOf(recipes[i].recipe_id) == -1){
+                                ingredientFilteredRecipes.push(recipes[i].recipe_id);
+                            }
+                        }
+                    }
+                }
+            }
+            let intersect = [];
+            for(let i = 0; i < restrictionFilteredRecipes.length; i++){
+                if(ingredientFilteredRecipes.indexOf(restrictionFilteredRecipes[i]) != -1){
+                    intersect.push(restrictionFilteredRecipes[i])
+                }
+            }
+            recipeIds = intersect;
         }
         
         //Handle categories
@@ -75,7 +108,7 @@ router.get('/', async (req, res) => {
                 }
             }).map(el => el.get('recipe_id'));
             let intersect = [];
-            for(let i = 0; i < categories.length; i++){ //only add recipes that fulfil ingredient, restriction and category constraints
+            for(let i = 0; i < recipes.length; i++){ //only add recipes that fulfil ingredient, restriction and category constraints
                 if(recipeIds.indexOf(recipes[i]) != -1){
                     intersect.push(recipes[i]);
                 }
@@ -83,9 +116,8 @@ router.get('/', async (req, res) => {
             recipeIds = intersect;
         }
 
-        let difficultyFloor = 0; //assigning numeric value, find recipes with steps greater than floor
         let difficultyCeiling = 1000000; //find recipes with steps less than ceiling
-        switch(req.query.recipeDifficulty){ 
+        switch(req.query.difficulty){ 
             case "beginner":
                 difficultyCeiling = 6;
                 break;
@@ -116,6 +148,7 @@ router.get('/', async (req, res) => {
             }
         }
         res.send(finalRecipes);
+        console.log(finalRecipes.length);
     } catch (err){
         res.send({message: "Failed to retrive recipes based on inputted ingredients", error: err});
     }
