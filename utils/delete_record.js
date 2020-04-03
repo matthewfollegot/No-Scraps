@@ -9,4 +9,4 @@ db.authenticate()
     .catch(() => console.log("Error: " + err))
 
 // delete record 
-User.destroy({where: {}}).then(res => console.log(res))
+Recipe.destroy({where: {}}).then(res => console.log(res))

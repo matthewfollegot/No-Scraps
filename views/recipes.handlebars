@@ -1,0 +1,14 @@
+<section id="recipes" class="container">
+    <h1>Recipes: (click to view more details of any recipe)</h1>
+
+    {{#each recipes}}
+        <div class="recipe">
+        <a href="/recipes/{{dataValues.recipe_id}}"><h3>{{dataValues.title}}</h3></a>
+        <p>Rating: {{dataValues.rating}}</p>
+        <p>Ingredients: {{dataValues.ingredients}}</p>
+        <p>Categories: {{dataValues.categories}}</p>
+        </div>
+    {{else}}
+    <p>no recipes matched</p>
+    {{/each}}
+</section>

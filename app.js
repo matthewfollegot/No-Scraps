@@ -1,4 +1,5 @@
 const express = require('express');
+const exphbs = require('express-handlebars');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 const users = require('./routes/users');
@@ -10,12 +11,10 @@ const url =  require('url');
 const login = require('./routes/login');
 const index = require('./routes/index');
 const favourites = require('./routes/favourites');
-
 const recipe_list = require('./routes/recipe_list');
+
 // Database
 const db = require('./config/database.js')
-
-
 
 // Test DB
 db.authenticate()
@@ -33,7 +32,11 @@ const http = require('http');
 
 // Set up the express app
 const app = express();
-app.set('view engine', 'ejs');
+
+// Handlebars
+app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
+app.set('view engine', 'handlebars');
+
 app.use(bodyParser());
 // Log requests to the console.
 app.use(logger('dev'));

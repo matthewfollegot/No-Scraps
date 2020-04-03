@@ -16,7 +16,6 @@ For difficulty, <=5 steps -> beginner, steps <= 10 -> intermediate, >10 steps ->
 */
 
 router.get('/', async (req, res) => {
-    try {
         let recipeIds = []; //will hold all the recipe_ids of the recipes that fulfil the queries 
 
         //Handle inputted ingredients and restrictions
@@ -147,12 +146,11 @@ router.get('/', async (req, res) => {
                 finalRecipes.push(recipesWithoutDifficulty[i]);
             }
         }
-        res.send(finalRecipes);
+        res.render('recipes', {
+            recipes: finalRecipes
+        });
         console.log(finalRecipes.length);
-    } catch (err){
-        res.send({message: "Failed to retrive recipes based on inputted ingredients", error: err});
-    }
-});
+    });
 
 router.post('/new', async(req, res) => {
     try {
@@ -168,6 +166,23 @@ router.post('/new', async(req, res) => {
         res.send({message: "Error adding new recipe", error: err});
     }
 });
+
+router.get('/:recipe_id', async(req, res) => {
+    console.log("hello")
+    try {
+        console.log(req.params.recipe_id);
+        const recipe = await Recipe.findAll({ //creating new instance (row) and adding to db
+            where: {
+                recipe_id: req.params.recipe_id
+            }
+        });
+        res.render('detailed_recipe', {
+            recipe
+        });
+    } catch(err) {
+        res.send({message: "Failed to retrieve recipe", error: err});
+    }
+})
 
 
 module.exports = router;

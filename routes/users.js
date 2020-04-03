@@ -47,8 +47,6 @@ router.post('/login', async (req, res) => {
         return res.send({message: "No existing user with the email " + req.body.email});
     }
     bcrypt.compare(req.body.password, dbPassword, function(err, result) {
-        // console.log(req.body.password)
-        // console.log(dbPassword)
         if (err){
             res.send({message: "Failed to login", error: err});
             return;

@@ -40,7 +40,7 @@ for (var i in res) {
             calories: res[i]['calories'],
             protein: res[i]['protein'],
             sodium: res[i]['sodium'],
-            description: res[i]['description'],
+            description: res[i]['desc'],
             ingredients: res[i]['ingredients'],
             steps: res[i]['directions'],
             categories: res[i]['categories']
