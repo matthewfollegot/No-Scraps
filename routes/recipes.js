@@ -75,7 +75,7 @@ router.get('/', async (req, res) => {
                 }
             }).map(el => el.get('recipe_id'));
             let intersect = [];
-            for(let i = 0; i < categories.length; i++){ //only add recipes that fulfil ingredient, restriction and category constraints
+            for(let i = 0; i < recipes.length; i++){ //only add recipes that fulfil ingredient, restriction and category constraints
                 if(recipeIds.indexOf(recipes[i]) != -1){
                     intersect.push(recipes[i]);
                 }
