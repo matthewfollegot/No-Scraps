@@ -2,10 +2,18 @@ const express = require('express');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 const users = require('./routes/users');
+const register = require('./routes/register');
 const recipes = require('./routes/recipes');
+const fs = require('fs');
+const url =  require('url');
+const login = require('./routes/login');
+const index = require('./routes/index');
 
+const recipe_list = require('./routes/recipe_list');
 // Database
 const db = require('./config/database.js')
+
+
 
 // Test DB
 db.authenticate()
@@ -23,15 +31,21 @@ const http = require('http');
 
 // Set up the express app
 const app = express();
-
+app.set('view engine', 'ejs');
 // Log requests to the console.
 app.use(logger('dev'));
+// app.use(express.static(path.join(__dirname,'public')));
 
+//Routes for login
+app.use('/login',login);
+app.use('/register', register);
 //User routes for auth
+app.use('/index', index);
 app.use('/users', users);
+app.use('/recipe_list', recipe_list);
 
 //Routes for recipes
-app.use('/recipes', recipes)
+app.use('/recipes', recipes);
 
 // Parse incoming requests data (https://github.com/expressjs/body-parser)
 app.use(bodyParser.json());
@@ -39,7 +53,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // Setup a default catch-all route that sends back a welcome message in JSON format.
 app.get('*', (req, res) => res.status(200).send({
-    message: 'Hello world :-)',
+    // message: 'Hello world :-)',
 }));
 
 const port = parseInt(process.env.PORT, 10) || 5000;
