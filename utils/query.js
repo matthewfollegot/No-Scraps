@@ -8,4 +8,4 @@ db.authenticate()
     .then(() => console.log('Database conncected...'))
     .catch(() => console.log("Error: " + err))
 
-User.findAll().then(res => console.log(res));
+Recipe.findAll().then(res => console.log(res));

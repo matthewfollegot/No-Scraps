@@ -35,24 +35,32 @@ router.post('/register', async (req, res) => {
 
 //Login
 router.post('/login', async (req, res) => {
-    try {
-        const dbPassword = await User.findAll({ //retrive hashed password of user with inputted email
-            attributes: ['password'],
-            where: {
-                email: req.body.email
-            }
-        });
-        if(dbPassword == null || dbPassword.length == 0){ //if no result
-            return res.send({message: "No existing user with the email " + req.body.email});
+    const user = await User.findAll({ //retrive hashed password of user with inputted email
+        attributes: ['password'],
+        where: {
+            email: req.body.email
         }
-        if(await bcrypt.compare(req.body.password, dbPassword)){ //compare inputted password and hashed password
-            res.send({message: "Login successful"}); //redirect somewhere?
-        } else{
-            res.status(401).send({message: "Invalid password"});
-        }
-    } catch(err) {
-        res.send({message: "Failed to login", error: err});
+    });
+    dbPassword = user[0]['password'];
+
+    if(dbPassword == null || dbPassword.length == 0){ //if no result
+        return res.send({message: "No existing user with the email " + req.body.email});
     }
+    bcrypt.compare(req.body.password, dbPassword, function(err, result) {
+        // console.log(req.body.password)
+        // console.log(dbPassword)
+        if (err){
+            res.send({message: "Failed to login", error: err});
+            return;
+        }
+        if (result) {
+            window.location.replace('/recipe_list');
+        } else {
+            // response is OutgoingMessage object that server response http request
+            res.send({success: false, message: 'passwords do not match'});
+            return;
+        }
+        });
 });
 
 //Change password
