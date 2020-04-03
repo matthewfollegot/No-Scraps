@@ -76,10 +76,32 @@
         .pink:hover {
             color: white;
         }
+        .recipe {
+            border: 0.1em solid black;
+            border-radius: 1em;
+            padding: 0.5em;
+            margin: 1em;
+        }
+        .recipe:hover {
+            border: 0.1em solid #F0929D;
+            cursor: pointer;
+        }
+        #recipeHeader {
+            text-align: center;
+            font-weight: bolder;
+        }
+        #noResults {
+            text-align: center;
+            font-weight: bold;
+        }
+        #makeBold{
+            font-weight: bolder;
+        }
     </style>
 </head>
 <body>
     <div class="container-fluid">
+        <p id="hiddenEmail" hidden>{{email}}</p>
         <div class="row" id="header">
             <div class="col-10">
                 <h2 id="headerText">No-Scraps</h2>
@@ -109,7 +131,7 @@
                 </div>
                 <div class="row" id="inputtedRestrictions">
                     <div class="col-4">
-                        <p id="restrictionsText">Allergies / Restrictions</p>
+                        <p id="restrictionsText">Allergies &amp; Restrictions</p>
                     </div>
                     <div class="col-8">
                         <input type="text" class="form-control" id="restrictions" placeholder="Enter allergies/restrictions">
@@ -142,17 +164,24 @@
             </div>
             <div class="col-9" id="results">
                 <section id="recipes" class="container">
-                    <h1>Recipes: (click to view more details of any recipe)</h1>
+                    <h1 id="recipeHeader">Recipes</h1>
 
                     {{#each recipes}}
                     <div class="recipe">
-                        <a href="/recipes/{{dataValues.recipe_id}}"><h3>{{dataValues.title}}</h3></a>
-                        <p>Rating: {{dataValues.rating}}</p>
-                        <p>Ingredients: {{dataValues.ingredients}}</p>
-                        <p>Categories: {{dataValues.categories}}</p>
+                        <div class="row">
+                            <div class="col-10">
+                                <h3 onclick="goToRecipe({{dataValues.recipe_id}})">{{dataValues.title}}</h3>
+                            </div>
+                            <div class="col-2">
+                                <button type="button" class="btn pink btn-sm" onclick="favouriteRecipe({{dataValues.recipe_id}})">Favourite</button>
+                            </div>
+                        </div>
+                        <p id="makeBold">Rating: {{dataValues.rating}}</p>
+                        <p id="makeBold">Ingredients: {{dataValues.ingredients}}</p>
+                        <p id="makeBold">Categories: {{dataValues.categories}}</p>
                     </div>
                     {{else}}
-                        <p>no recipes matched</p>
+                        <p id="noResults">No recipes match query. Please try another query.</p>
                     {{/each}}
                 </section>
             </div>
@@ -165,6 +194,21 @@
             let categories = document.getElementById('categories').value;
             let difficulty = document.getElementById('difficulty').value.toLowerCase();
             window.location.replace('/recipes?ingredients=' + ingredients + '&restrictions=' + restrictions + '&categories=' + categories + '&difficulty=' + difficulty);
+        }
+        function goToRecipe(recipe_id){
+            window.location.replace('/recipes/' + recipe_id);
+        }
+        function favouriteRecipe(recipe_id) {
+            let email = document.getElementById('hiddenEmail').innerHTML;
+            axios.post('users/' + email + '/favourites', {
+                recipe_id: recipe_id
+            })
+                .then(resp => {
+                    console.log(resp);
+                })
+                .catch(err => {
+                    console.log(err);
+                });
         }
     </script>
 </body>

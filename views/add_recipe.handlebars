@@ -113,10 +113,16 @@
         function addRecipe() {
             let inputs = document.getElementById("recipe-info").elements;
             let title = inputs['title'].value;
-            let description = inputs['recipeDescription'.value];
+            let description = inputs['recipeDescription'].value;
             let ingredients = inputs['ingredients'].value.split(',');
             let steps = inputs['steps'].value.split(',');
             let categories = inputs['categories'].value.split(',');
+
+            console.log(title);
+            console.log(description);
+            console.log(ingredients);
+            console.log(steps);
+            console.log(categories);
 
             if(!title || !description || ! ingredients || !steps || !categories){
                 document.getElementById('errors').innerHTML = "One of more inputs is missing. Please fill in all inputs."

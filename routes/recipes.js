@@ -168,7 +168,6 @@ router.post('/new', async(req, res) => {
 });
 
 router.get('/:recipe_id', async(req, res) => {
-    console.log("hello")
     try {
         console.log(req.params.recipe_id);
         const recipe = await Recipe.findAll({ //creating new instance (row) and adding to db

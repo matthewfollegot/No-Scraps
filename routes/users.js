@@ -99,6 +99,7 @@ router.get('/:email/favourites', async (req, res) => {
                 }
             }
         });
+        console.log(favouriteRecipes);
         res.json(favouriteRecipes);
     } catch(err) {
         res.send({message: "Failed to retrieve favourites", error: err});
