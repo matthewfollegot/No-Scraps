@@ -154,5 +154,20 @@ router.get('/', async (req, res) => {
     }
 });
 
+router.post('/new', async(req, res) => {
+    try {
+        const newRecipe = await Recipe.create({
+            title: req.body.title,
+            description: req.body.description,
+            ingredients: req.body.ingredients,
+            steps: req.body.steps,
+            categories: req.body.categories
+        });
+        res.json(newRecipe)
+    } catch(err) {
+        res.send({message: "Error adding new recipe", error: err});
+    }
+});
+
 
 module.exports = router;

@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const users = require('./routes/users');
 const register = require('./routes/register');
 const recipes = require('./routes/recipes');
+const addRecipe = require('./routes/addRecipe');
 const fs = require('fs');
 const url =  require('url');
 const login = require('./routes/login');
@@ -55,6 +56,7 @@ app.use('/recipe_list', recipe_list);
 
 //Routes for recipes
 app.use('/recipes', recipes);
+app.use('/addRecipe', addRecipe);
 
 //Routes for favourites
 app.use('/favourites', favourites);
