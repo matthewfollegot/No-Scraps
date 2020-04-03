@@ -29,7 +29,7 @@
             margin-bottom: 1em;
             float: none; 
         }
-        #register {
+        #addOrBack {
             text-align: center;
             margin-top: 1em;
             margin-bottom: 1em;
@@ -58,6 +58,12 @@
         #errors {
             color: red;
             text-align: center;
+        }
+        .blue {
+            background: #34BCE1;
+        }
+        .blue:hover {
+            color: white;
         }
     </style>
 </head>
@@ -95,7 +101,8 @@
                         <p id="example">Ex. Vegan, Vegtarian, Halal</p>
                     </div>
                     <p id="errors"></p>
-                    <div id="register">
+                    <div id="addOrBack">
+                        <input type="button" class="btn blue" onclick="window.location.replace('/recipe_list')" value="Back"/>
                         <input type="button" class="btn skin" onclick="addRecipe()" value="Add Recipe"/>
                     </div>
                 </form>
