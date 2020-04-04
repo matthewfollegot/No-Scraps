@@ -27,6 +27,7 @@
     "express": "^4.17.1",
     "express-handlebars": "^4.0.2",
     "express-router": "0.0.1",
+    "js-cookie": "^2.2.1",
     "morgan": "^1.9.1",
     "mysql2": "^2.1.0",
     "pg": "^8.0.0",

@@ -11,6 +11,7 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
     <style>
         * {
             font-family: 'Comic Neue'; 
@@ -96,24 +97,29 @@
         #makeBold{
             font-weight: bolder;
         }
+        #topLinks {
+            text-decoration: none;
+        }
+        #links {
+            margin: auto;
+            text-align: right;
+        }
+        .blue {
+            background: #82E2E7;
+        }
     </style>
 </head>
 <body>
     <div class="container-fluid">
         <p id="hiddenEmail" hidden>{{email}}</p>
         <div class="row" id="header">
-            <div class="col-10">
+            <div class="col-8">
                 <h2 id="headerText">No-Scraps</h2>
             </div>
-            <div class="col-2" id="profile">
-                <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Profile</button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="/addRecipe">Add Recipe</a>
-                        <a class="dropdown-item" href="/user/{{email}}/favourites">Favourites</a>
-                        <a class="dropdown-item" href="/login">Logout</a>
-                    </div>
-                </div>
+            <div class="col-4" id="links">
+                <button type="button" class="btn btn-secondary" onclick="window.location.repalce('/addRecipe');">Add Recipe</button>
+                <button type="button" class="btn btn-secondary" onclick="getFavourites()">Favourites</button>
+                <button type="button" class="btn btn-secondary" onclick="logout()">Logout</button>
             </div>
         </div>
         <div class="row" id="page">
@@ -193,6 +199,12 @@
     </div>
     <script>
         function getRecipes() {
+            if(!Cookies.get('email')){
+                let userEmail = document.getElementById('hiddenEmail').innerHTML;
+                Cookies.set('email', userEmail);
+            } else{
+                document.getElementById('hiddenEmail').innerHTML = Cookies.get('email');
+            }
             let ingredients = document.getElementById('ingredients').value;
             let restrictions = document.getElementById('restrictions').value;
             let categories = document.getElementById('categories').value;
@@ -203,8 +215,14 @@
             window.location.replace('/recipes/' + recipe_id);
         }
         function favouriteRecipe(recipe_id) {
-            let email = document.getElementById('hiddenEmail').innerHTML;
-            axios.post('users/' + email + '/favourites', {
+            let email = "";
+            if(!Cookies.get('email')){
+                let userEmail = document.getElementById('hiddenEmail').innerHTML;
+                email = Cookies.set('email', userEmail);
+            } else{
+                email = document.getElementById('hiddenEmail').innerHTML = Cookies.get('email');
+            }
+            axios.post('/users/' + email + '/favourites', {
                 recipe_id: recipe_id
             })
                 .then(resp => {
@@ -213,6 +231,23 @@
                 .catch(err => {
                     console.log(err);
                 });
+        }
+        function getFavourites() {
+            let email = "";
+            if(!Cookies.get('email')){
+                console.log('hisjisjh');
+                let userEmail = document.getElementById('hiddenEmail').innerHTML;
+                email = Cookies.set('email', userEmail);
+            } else{
+                email = document.getElementById('hiddenEmail').innerHTML = Cookies.get('email');
+                console.log('sss');
+            }
+            console.log(email);
+            window.location.replace('/users/' + email + '/favourites');
+        }
+        function logout() {
+            Cookies.remove('email');
+            window.location.replace('/login');
         }
     </script>
 </body>

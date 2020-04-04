@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Favourites</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href='https://fonts.googleapis.com/css?family=Comic Neue' rel='stylesheet'>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+</head>
+<style>
+    * {
+        font-family: 'Comic Neue'; 
+        background:#F7E9D0;
+    }
+    .container {
+        min-width: 100%
+    }
+    #recipeName {
+        margin-top: 2em;
+        font-weight: bolder;
+    }
+    .pink {
+        background: #F0929D;
+    }
+    .pink:hover {
+        color: white;
+    }
+    .centerMe {
+        text-align: center;
+    }
+    #favTitle {
+        text-align: center;
+        font-weight: bolder;
+    }
+    #noFavs {
+        text-align: center;
+        font-weight: bold;
+    }
+</style>
+<body>
+    <h1 id="favTitle">Favourites</h1>
+    <section id="recipes" class="container">
+    {{#each recipes}}
+        <div class="recipe">
+            <div class="row">
+                <div class="col-10">
+                    <h3>{{dataValues.title}}</h3>
+                </div>
+                <div class="col-2">
+                    <button type="button" class="btn pink btn-sm" onclick="removeFavourite({{dataValues.recipe_id}})">Remove Favourite</button>
+                </div>
+            </div>
+            <p>Rating: {{dataValues.rating}}/5</p>
+            <p>Description: {{dataValues.description}}</p>
+            <p>Categories: {{dataValues.categories}}</p>
+            <p>Ingredients:</p>
+            <ul>
+                {{#each dataValues.ingredients}}
+                <li>{{ this }}</li>
+                {{/each}}
+            </ul>  
+            <p>Steps:</p>
+            <ol>
+                {{#each dataValues.steps}}
+                <li>{{ this }}</li>
+                {{/each}}
+            </ol>   
+            <p>Calories: {{dataValues.calories}}cal</p>
+            <p>Fat: {{dataValues.fat}}g</p>
+            <p>Protein: {{dataValues.protein}}g</p>
+            <p>Sodium: {{dataValues.sodium}}g</p>
+        </div>
+    {{else}}
+    <p id="noFavs">No favourited recipes.</p>
+    {{/each}}
+    <div class="centerMe">
+        <button type="button" class="btn pink btn-lg" onclick="window.location.replace('/recipes')">Back</button>
+    </div>
+</section>
+
+<script>
+    function removeFavourite(recipe_id) {
+        axios.put('/users/' + Cookies.get('email') + '/favourites', {
+            recipe_id: recipe_id
+        })
+            .then(resp => {
+                console.log(resp);
+            })
+            .catch(err => {
+                console.log(err);
+            });
+        window.location.replace('/recipe_list');
+    }
+</script>
+</body>
+</html>

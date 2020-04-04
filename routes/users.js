@@ -3,6 +3,8 @@ const bcrypt = require('bcrypt');
 const User = require('./../models/User');
 const Favourites = require('./../models/Favourites');
 const Recipe = require('./../models/Recipe');
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 const router = express.Router();
 
 //Get all users (FOR TESTING PURPOSES)
@@ -83,24 +85,35 @@ router.put('/:email/password', async (req, res) => {
 //Get user favourite recipes
 router.get('/:email/favourites', async (req, res) => {
     try{
-        const recipeIds = await Favourites.findAll({
-            attributes: ['recipe_id'],
+        Favourites.findAll({
             where: {
                 email: req.params.email
             }
-        }).map(el => el.get('recipe_id'));
-        if(recipeIds == null || recipeIds.length == 0){
-            return res.send({message: "No favourites for the email " + req.params.email});
-        }
-        const favouriteRecipes = await Recipe.findAll({
-            where: {
-                recipe_id: {
-                    [Op.in]: recipeIds
+        })
+            .then(resp => {
+                let recipeIds = resp.map(el => el.get('recipe_id'));
+                if(recipeIds == null || recipeIds.length == 0){
+                    res.render('favourites', {recipes: []});
+                } else{
+                    Recipe.findAll({
+                        where: {
+                            recipe_id: {
+                                [Op.in]: recipeIds
+                            }
+                        }
+                    })
+                        .then(resp => {
+                            console.log(resp);
+                            res.render('favourites', {recipes: resp});
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        })
                 }
-            }
-        });
-        console.log(favouriteRecipes);
-        res.json(favouriteRecipes);
+            })
+            .catch(err => {
+                console.log(err);
+            });
     } catch(err) {
         res.send({message: "Failed to retrieve favourites", error: err});
     }
@@ -109,26 +122,37 @@ router.get('/:email/favourites', async (req, res) => {
 //Add favourite 
 router.post('/:email/favourites', async (req, res) => {
     try{
-        const newFavourite = await Favourite.create({
+        Favourites.create({
             email: req.params.email,
             recipe_id: req.body.recipe_id
-        });
-        res.json(newFavourite);
+        })
+            .then(resp => {
+                console.log(resp);
+            })
+            .catch(err => {
+                console.log(err);
+            })
     } catch(err) {
         res.send({message: "Failed to add new favourite" , error: err});
     }
 });
 
 //Delete favourite
-router.delete('/:email/favourite', async (req, res) => {
+router.put('/:email/favourites', async (req, res) => {
     try{
-        const deletedFavourite = await Favourites.destroy({
-            where: {
+        Favourites.destroy({
+            where:{
                 email: req.params.email,
                 recipe_id: req.body.recipe_id
             }
-        });
-        res.json(deletedFavourite);
+        })
+            .then(resp => {
+                console.log(resp);
+                res.send(resp);
+            })
+            .catch(err => {
+                console.log(err);
+            });
     }
     catch(err) {
         res.send({message: "Failed to delete favourite instance", error: err});

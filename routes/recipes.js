@@ -3,6 +3,7 @@ const Recipe = require('./../models/Recipe');
 //const Ingredient = require('./../models/Ingredient');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
+const Cookies = require('js-cookie');
 const router = express.Router();
 
 //Get recipes by inputted ingredients
