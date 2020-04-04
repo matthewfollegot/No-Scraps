@@ -123,6 +123,7 @@
             <div class="col-4" id="links">
                 <button type="button" class="btn btn-secondary" onclick="window.location.replace('/addRecipe');">Add Recipe</button>
                 <button type="button" class="btn btn-secondary" onclick="getFavourites()">Favourites</button>
+                <button type="button" class="btn btn-secondary" onclick="help()">Help</button>
                 <button type="button" class="btn btn-secondary" onclick="logout()">Logout</button>
             </div>
         </div>
@@ -252,6 +253,9 @@
         function logout() {
             Cookies.remove('email');
             window.location.replace('/login');
+        }
+        function help() {
+            window.location.replace('mailto:no-scraps@gmail.com');
         }
     </script>
 </body>
