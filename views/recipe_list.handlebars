@@ -38,6 +38,9 @@
         #results {
             background: #F7E9D0
         }
+        #page {
+            min-height: 100vh;
+        }
         #ingredientsText {
             font-weight: bold;
         }
@@ -123,7 +126,7 @@
                 <button type="button" class="btn btn-secondary" onclick="logout()">Logout</button>
             </div>
         </div>
-        <div class="row">
+        <div class="row" id="page">
             <div class="col-3" id="filtering">
                 <h2 id="recipeFiltering">Apply Recipe Filtering</h2>
                 <div class="row" id="inputtedIngredients">
