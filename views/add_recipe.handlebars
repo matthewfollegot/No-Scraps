@@ -16,6 +16,9 @@
            background: #F7E9D0;
            font-family: 'Comic Neue'; 
         }
+        .container {
+            min-width: 100%;
+        }
         #recipeHeader {
             font-weight: bolder;
             text-align: center;
@@ -36,6 +39,7 @@
         }
         #example {
             font-size: 0.9em;
+            text-align: left;
         }
         .skin {
             background: #F0929D;
@@ -118,12 +122,6 @@
             let steps = inputs['steps'].value.split(',');
             let categories = inputs['categories'].value.split(',');
 
-            console.log(title);
-            console.log(description);
-            console.log(ingredients);
-            console.log(steps);
-            console.log(categories);
-
             if(!title || !description || ! ingredients || !steps || !categories){
                 document.getElementById('errors').innerHTML = "One of more inputs is missing. Please fill in all inputs."
             } else{
@@ -136,7 +134,7 @@
                 })
                     .then(resp => {
                         console.log(resp);
-                        window.location.replace('/recipe_list');
+                        //window.location.replace('/recipe_list');
                     })
                     .catch(err => {
                         console.log(err);

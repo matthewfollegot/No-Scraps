@@ -17,6 +17,9 @@
         font-family: 'Comic Neue'; 
         background:#F7E9D0;
     }
+    .container {
+        min-width: 100%
+    }
     #recipeName {
         margin-top: 2em;
         font-weight: bolder;
@@ -36,15 +39,25 @@
     {{#each recipe}}
         <div class="recipe">
             <h3 id="recipeName">{{dataValues.title}}</h3>
-            <p>Rating: {{dataValues.rating}}</p>
+            <p>Rating: {{dataValues.rating}}/5</p>
             <p>Description: {{dataValues.description}}</p>
             <p>Categories: {{dataValues.categories}}</p>
-            <p>Ingredients: {{dataValues.ingredients}}</p>
-            <p>Steps: {{dataValues.steps}}</p>
-            <p>Calories: {{dataValues.calories}}</p>
-            <p>Fat: {{dataValues.fat}}</p>
-            <p>Protein: {{dataValues.protein}}</p>
-            <p>Sodium: {{dataValues.sodium}}</p>
+            <p>Ingredients:</p>
+            <ul>
+                {{#each dataValues.ingredients}}
+                <li>{{ this }}</li>
+                {{/each}}
+            </ul>  
+            <p>Steps:</p>
+            <ol>
+                {{#each dataValues.steps}}
+                <li>{{ this }}</li>
+                {{/each}}
+            </ol>   
+            <p>Calories: {{dataValues.calories}}cal</p>
+            <p>Fat: {{dataValues.fat}}g</p>
+            <p>Protein: {{dataValues.protein}}g</p>
+            <p>Sodium: {{dataValues.sodium}}g</p>
             <div class="centerMe">
                 <button type="button" class="btn pink btn-lg" onclick="window.location.replace('/recipes')">Back</button>
             </div>

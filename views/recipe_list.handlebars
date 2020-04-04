@@ -49,7 +49,6 @@
         }
         #example {
             font-size: 0.9em;
-            text-align: center;
         }
         #inputtedRestrictions {
             margin-bottom: 2em;
@@ -126,7 +125,7 @@
                     </div>
                     <div class="col-8">
                         <input type="text" class="form-control" id="ingredients" placeholder="Enter ingredients">
-                        <p id="example">Ex. apples,bananas,oranges</p>
+                        <p id="example">Ex. apples,bananas</p>
                     </div>
                 </div>
                 <div class="row" id="inputtedRestrictions">
@@ -135,7 +134,7 @@
                     </div>
                     <div class="col-8">
                         <input type="text" class="form-control" id="restrictions" placeholder="Enter allergies/restrictions">
-                        <p id="example">Ex. peanuts,milk,shrimp</p>
+                        <p id="example">Ex. peanuts,milk</p>
                     </div>
                 </div>
                 <div class="row" id="inputtedCategory">
@@ -176,8 +175,13 @@
                                 <button type="button" class="btn pink btn-sm" onclick="favouriteRecipe({{dataValues.recipe_id}})">Favourite</button>
                             </div>
                         </div>
-                        <p id="makeBold">Rating: {{dataValues.rating}}</p>
-                        <p id="makeBold">Ingredients: {{dataValues.ingredients}}</p>
+                        <p id="makeBold">Rating: {{dataValues.rating}}/5</p>
+                        <p id="makeBold"></p>Ingredients:</p>
+                        <ul>
+                            {{#each dataValues.ingredients}}
+                                <li>{{ this }}</li>
+                            {{/each}}
+                        </ul>  
                         <p id="makeBold">Categories: {{dataValues.categories}}</p>
                     </div>
                     {{else}}
