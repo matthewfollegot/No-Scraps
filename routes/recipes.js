@@ -117,6 +117,7 @@ router.get('/', async (req, res) => {
         }
 
         let difficultyCeiling = 1000000; //find recipes with steps less than ceiling
+        let difficultyFloor = 0;
         switch(req.query.difficulty){ 
             case "beginner":
                 difficultyCeiling = 6;

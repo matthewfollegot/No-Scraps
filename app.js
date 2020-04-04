@@ -6,10 +6,7 @@ const users = require('./routes/users');
 const register = require('./routes/register');
 const recipes = require('./routes/recipes');
 const addRecipe = require('./routes/addRecipe');
-const fs = require('fs');
-const url =  require('url');
 const login = require('./routes/login');
-const index = require('./routes/index');
 const favourites = require('./routes/favourites');
 const recipe_list = require('./routes/recipe_list');
 
@@ -38,9 +35,9 @@ app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
 app.set('view engine', 'handlebars');
 
 app.use(bodyParser());
+
 // Log requests to the console.
 app.use(logger('dev'));
-// app.use(express.static(path.join(__dirname,'public')));
 
 app.get('/', (req, res) => {
     try{
@@ -49,11 +46,12 @@ app.get('/', (req, res) => {
         res.send({message: "Error rending homepage", error: err});
     }
 })
+
 //Routes for login
 app.use('/login',login);
 app.use('/register', register);
+
 //User routes for auth
-app.use('/index', index);
 app.use('/users', users);
 app.use('/recipe_list', recipe_list);
 
