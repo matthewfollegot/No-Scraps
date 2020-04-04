@@ -16,6 +16,10 @@
         * {
             font-family: 'Comic Neue'; 
         }
+        .container {
+            padding: 0;
+            min-width: 100%;
+        }
         #header {
             background: #F0929D;
             border-bottom: 0.05em solid black;
@@ -168,7 +172,7 @@
                 </div>
             </div>
             <div class="col-9" id="results">
-                <section id="recipes" class="container">
+                <section id="recipes">
                     <h1 id="recipeHeader">Recipes</h1>
 
                     {{#each recipes}}
